@@ -40,6 +40,10 @@
                 <img src="マリオ画像/アイコン/スパナ.png" alt="設定">
                 <span>動作設定</span>
             </div>
+            <div class="menu-item" onclick="openResetModal()">
+                <img src="マリオ画像/アイコン/明度アイコン.png" alt="Reset">
+                <span>初期化</span>
+            </div>
         </div>
 
         <div class="result">
@@ -51,7 +55,7 @@
                     <button class="history-toggle-btn" onclick="openModal('charHistoryModal')">りれき</button>
                     <div class="quick-toggle">
                         <input type="checkbox" id="mainExcludeChar" onchange="syncSettings('char')">
-                        <label for="mainExcludeChar">使用済みキャラ不可</label>
+                        <label for="mainExcludeChar">使用済み不可</label>
                     </div>
                 </div>
             </div>
@@ -64,7 +68,7 @@
                     <button class="history-toggle-btn" onclick="openModal('machineHistoryModal')">りれき</button>
                     <div class="quick-toggle">
                         <input type="checkbox" id="mainExcludeMachine" onchange="syncSettings('machine')">
-                        <label for="mainExcludeMachine">使用済みマシン不可</label>
+                        <label for="mainExcludeMachine">使用済み不可</label>
                     </div>
                 </div>
             </div>
@@ -77,22 +81,9 @@
         <div class="modal-content">
             <button class="close-icon-btn" onclick="closeModal('playerModal')">✖</button>
             <h2 style="margin-top:20px;">プレイヤー設定</h2>
-            <div class="config-item">
-                <label>人数 (1〜6人)</label>
-                <select id="playerCountSelect" onchange="generatePlayerInputs()">
-                    <option value="1">1人</option><option value="2">2人</option>
-                    <option value="3">3人</option><option value="4">4人</option>
-                    <option value="5">5人</option><option value="6">6人</option>
-                </select>
-            </div>
-            <div class="config-item">
-                <label>キャラかぶりなし</label>
-                <input type="checkbox" id="preventCharOverlap">
-            </div>
-            <div class="config-item">
-                <label>マシンかぶりなし</label>
-                <input type="checkbox" id="preventMachOverlap">
-            </div>
+            <div class="config-item"><label>人数 (1〜6人)</label><select id="playerCountSelect" onchange="generatePlayerInputs()"><option value="1">1人</option><option value="2">2人</option><option value="3">3人</option><option value="4">4人</option><option value="5">5人</option><option value="6">6人</option></select></div>
+            <div class="config-item"><label>キャラかぶりなし</label><input type="checkbox" id="preventCharOverlap"></div>
+            <div class="config-item"><label>マシンかぶりなし</label><input type="checkbox" id="preventMachOverlap"></div>
             <div id="playerNameInputs"></div>
             <button class="close-btn" onclick="savePlayers()">保存して閉じる</button>
         </div>
@@ -102,10 +93,7 @@
         <div class="modal-content">
             <button class="close-icon-btn" onclick="closeModal('charModal')">✖</button>
             <h2>キャラ選択</h2>
-            <div class="bulk-action-row">
-                <button class="bulk-btn select-all" onclick="bulkSelect('char', true)">すべて選択</button>
-                <button class="bulk-btn deselect-all" onclick="bulkSelect('char', false)">すべて解除</button>
-            </div>
+            <div class="bulk-action-row"><button class="bulk-btn select-all" onclick="bulkSelect('char', true)">すべて選択</button><button class="bulk-btn deselect-all" onclick="bulkSelect('char', false)">すべて解除</button></div>
             <div id="charList" class="selection-grid"></div>
         </div>
     </div>
@@ -114,10 +102,7 @@
         <div class="modal-content">
             <button class="close-icon-btn" onclick="closeModal('machineModal')">✖</button>
             <h2>マシン選択</h2>
-            <div class="bulk-action-row">
-                <button class="bulk-btn select-all" onclick="bulkSelect('machine', true)">すべて選択</button>
-                <button class="bulk-btn deselect-all" onclick="bulkSelect('machine', false)">すべて解除</button>
-            </div>
+            <div class="bulk-action-row"><button class="bulk-btn select-all" onclick="bulkSelect('machine', true)">すべて選択</button><button class="bulk-btn deselect-all" onclick="bulkSelect('machine', false)">すべて解除</button></div>
             <div id="machineList" class="selection-grid"></div>
         </div>
     </div>
@@ -132,6 +117,18 @@
             <div class="config-item"><label>演出をスキップ</label><input type="checkbox" id="skipAnimation"></div>
             <div class="config-item"><label>回転時間: <span id="timeValue">2.0</span>s</label><input type="range" id="rouletteTime" min="0.5" max="5.0" step="0.5" value="2.0"></div>
             <button class="close-btn" onclick="closeModal('appSettingsModal')">保存</button>
+        </div>
+    </div>
+
+    <div id="resetConfirmModal" class="modal">
+        <div class="reset-modal-content">
+            <div class="reset-warning-icon">!</div>
+            <h2>すべてリセット？</h2>
+            <p>プレイヤー名やキャラの選択設定が<br>すべて消えてしまいます。</p>
+            <div class="reset-btns-column">
+                <button class="reset-execute-btn" onclick="executeReset()">リセットする</button>
+                <button class="reset-cancel-btn" onclick="closeModal('resetConfirmModal')">やめる</button>
+            </div>
         </div>
     </div>
 

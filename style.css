@@ -131,54 +131,25 @@ body {
 
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); }
 .modal-content { position: relative; background: #eee; margin: 5vh auto; padding: 20px; border: 5px solid #333; width: 340px; height: 85vh; border-radius: 25px; overflow-y: auto; }
+
 /* 閉じるボタン（✖）の完全修正版 */
 .close-icon-btn {
-    position: sticky;
-    top: -10px;
-    float: right;
-    
-    /* 背景と文字色を強制固定 */
-    background-color: #ffffff !important; 
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important; /* iOSでの文字消え対策 */
-    
-    /* ボタン自体の見た目をリセット */
-    -webkit-appearance: none;
-    appearance: none;
-    border: 2px solid #000000 !important; /* 白い枠線をつけて存在感を出す */
-    
-    /* サイズと配置 */
-    width: 32px;
-    height: 32px;
-    border-radius: 50%; /* 16pxではなく50%で完全な円に */
-    font-size: 18px;
-    font-weight: bold;
-    
-    /* 真ん中に配置するための設定 */
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    line-height: 1;
-    padding: 0;
-    margin: 0;
-    
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(211, 211, 211, 0.3); /* 少し影をつけて浮かせる */
+    position: sticky; top: -10px; float: right;
+    background-color: #ffffff !important; color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    -webkit-appearance: none; appearance: none;
+    border: 2px solid #000000 !important;
+    width: 32px; height: 32px; border-radius: 50%;
+    font-size: 18px; font-weight: bold;
+    display: flex !important; justify-content: center; align-items: center;
+    line-height: 1; padding: 0; margin: 0;
+    cursor: pointer; z-index: 1000; box-shadow: 0 2px 5px rgba(211, 211, 211, 0.3);
 }
 
-/* タップした時の反応 */
-.close-icon-btn:active {
-    background-color: #ffffff !important;
-    transform: scale(0.9);
-}
-/* 一括操作ボタンエリア */
-.bulk-action-row {
-    display: flex; gap: 10px; margin-bottom: 15px; position: sticky; top: 25px; z-index: 5; background: #eee; padding: 10px 0;
-}
-.bulk-btn {
-    flex: 1; padding: 8px; font-size: 11px; font-weight: bold; border: 2px solid #333; border-radius: 10px; cursor: pointer; box-shadow: 0 3px 0 #333; transition: all 0.1s;
-}
+.close-icon-btn:active { background-color: #ffffff !important; transform: scale(0.9); }
+
+.bulk-action-row { display: flex; gap: 10px; margin-bottom: 15px; position: sticky; top: 25px; z-index: 5; background: #eee; padding: 10px 0; }
+.bulk-btn { flex: 1; padding: 8px; font-size: 11px; font-weight: bold; border: 2px solid #333; border-radius: 10px; cursor: pointer; box-shadow: 0 3px 0 #333; transition: all 0.1s; }
 .select-all { background-color: #ffcc00; color: #333; }
 .deselect-all { background-color: #bbb; color: #fff; }
 
@@ -194,3 +165,26 @@ body {
 
 .close-btn { width: 100%; padding: 12px; background: #27c93f; color: white; border-radius: 25px; border: 2px solid #333; font-size: 18px; box-shadow: 0 4px 0 #333; font-weight: bold; margin-top: 10px; transition: all 0.1s; cursor: pointer; }
 .reset-full-btn { width: 100%; padding: 10px; background: #ff5f56; color: white; border-radius: 15px; border: 2px solid #333; box-shadow: 0 3px 0 #333; font-weight: bold; margin-top: 10px; transition: all 0.1s; cursor: pointer; }
+
+/* ★追加：初期化ダイアログ専用UI */
+.reset-modal-content {
+    background: #fff; border: 5px solid #e60012; border-radius: 30px;
+    padding: 30px 20px; width: 320px; margin: 20vh auto; text-align: center;
+    box-shadow: 0 10px 0 #990000;
+}
+.reset-warning-icon {
+    font-size: 40px; background: #ffcc00; width: 60px; height: 60px; line-height: 60px;
+    border-radius: 50%; margin: 0 auto 15px; border: 3px solid #333; font-weight: bold;
+}
+.reset-modal-content h2 { color: #e60012; font-size: 20px; margin-bottom: 10px; }
+.reset-modal-content p { font-size: 13px; color: #333; margin-bottom: 25px; line-height: 1.5; }
+.reset-btns-column { display: flex; flex-direction: column; gap: 12px; }
+.reset-execute-btn {
+    background: #ff5f56; color: white; border: 2px solid #333; padding: 14px;
+    border-radius: 15px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #a31a1a;
+}
+.reset-cancel-btn {
+    background: #bbb; color: white; border: 2px solid #333; padding: 14px;
+    border-radius: 15px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #777;
+}
+.reset-execute-btn:active, .reset-cancel-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #333; }

@@ -216,11 +216,9 @@ function generateList(id, full, current, type, path, ext) {
     });
 }
 
-// 一括選択・解除の関数
 function bulkSelect(type, isAll) {
     const fullList = (type === 'char') ? characters : machines;
     const targetList = isAll ? [...fullList] : [];
-    
     if (type === 'char') {
         myChars = targetList;
         localStorage.setItem('myChars', JSON.stringify(myChars));
@@ -246,3 +244,13 @@ function updateHistoryDisplay() {
 }
 
 function resetHistory(t) { if (t === 'char') usedChars = []; else usedMachines = []; updateHistoryDisplay(); }
+
+/* --- 初期化カスタムモーダル用関数 --- */
+function openResetModal() {
+    openModal('resetConfirmModal');
+}
+
+function executeReset() {
+    localStorage.clear();
+    location.reload();
+}

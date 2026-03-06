@@ -138,14 +138,14 @@ body {
     float: right;
     
     /* 背景と文字色を強制固定 */
-    background-color: #333 !important; 
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important; /* iOSでの文字消え対策 */
+    background-color: #ffffff !important; 
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important; /* iOSでの文字消え対策 */
     
     /* ボタン自体の見た目をリセット */
     -webkit-appearance: none;
     appearance: none;
-    border: 2px solid #ffffff !important; /* 白い枠線をつけて存在感を出す */
+    border: 2px solid #000000 !important; /* 白い枠線をつけて存在感を出す */
     
     /* サイズと配置 */
     width: 32px;
@@ -164,12 +164,12 @@ body {
     
     cursor: pointer;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* 少し影をつけて浮かせる */
+    box-shadow: 0 2px 5px rgba(211, 211, 211, 0.3); /* 少し影をつけて浮かせる */
 }
 
 /* タップした時の反応 */
 .close-icon-btn:active {
-    background-color: #000 !important;
+    background-color: #ffffff !important;
     transform: scale(0.9);
 }
 /* 一括操作ボタンエリア */

@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="apple-mobile-web-app-title" content="MARIOKART RANDOM">
-    
+    <meta name="apple-mobile-web-app-title" content="MK RANDOM">
     <link rel="apple-touch-icon" href="マリオ画像/アイコン/アプリアイコン.png">
-    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
     <title>Mario Kart Roulette Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -28,71 +24,114 @@
         </h1>
 
         <div class="settings-menu">
+            <div class="menu-item" onclick="openModal('playerModal')">
+                <img src="マリオ画像/アイコン/ゲームアイコン.png" alt="プレイヤー">
+                <span>プレイヤー</span>
+            </div>
             <div class="menu-item" onclick="openModal('charModal')">
-                <img src="マリオ画像/アイコン/人物ボタン.png" alt="キャラ設定">
+                <img src="マリオ画像/アイコン/人物ボタン.png" alt="キャラ">
                 <span>キャラ管理</span>
             </div>
             <div class="menu-item" onclick="openModal('machineModal')">
-                <img src="マリオ画像/アイコン/バイクアイコン.png" alt="マシン設定">
+                <img src="マリオ画像/アイコン/バイクアイコン.png" alt="マシン">
                 <span>マシン管理</span>
             </div>
             <div class="menu-item" onclick="openModal('appSettingsModal')">
-                <img src="マリオ画像/アイコン/スパナ.png" alt="アプリ設定">
+                <img src="マリオ画像/アイコン/スパナ.png" alt="設定">
                 <span>動作設定</span>
             </div>
         </div>
 
         <div class="result">
-            <div class="box character-box">
-                <div id="charName" class="name-display">？</div>
-                <div class="img-frame" id="charFrame">
-                    <div id="charPlaceholder" class="placeholder">？</div>
-                    <img id="charImg" src="" alt="キャラクター" style="display:none;">
+            <div class="box">
+                <div class="box-label">CHARACTERS</div>
+                <div id="charContainer" class="multi-grid-container"></div>
+                <div class="action-row">
+                    <button id="spinCharBtn" class="spin-btn" onclick="spinCharacter()">RANDOM</button>
+                    <button class="history-toggle-btn" onclick="openModal('charHistoryModal')">りれき</button>
+                    <div class="quick-toggle">
+                        <input type="checkbox" id="mainExcludeChar" onchange="syncSettings('char')">
+                        <label for="mainExcludeChar">使用済みキャラ不可</label>
+                    </div>
                 </div>
-                <button class="spin-btn" onclick="spinCharacter()">RANDOM</button>
             </div>
 
-            <div class="box machine-box">
-                <div id="machineName" class="name-display">？</div>
-                <div class="img-frame" id="machineFrame">
-                    <div id="machinePlaceholder" class="placeholder">？</div>
-                    <img id="machineImg" src="" alt="マシン" style="display:none;">
+            <div class="box">
+                <div class="box-label">MACHINES</div>
+                <div id="machineContainer" class="multi-grid-container"></div>
+                <div class="action-row">
+                    <button id="spinMachBtn" class="spin-btn" onclick="spinMachine()">RANDOM</button>
+                    <button class="history-toggle-btn" onclick="openModal('machineHistoryModal')">りれき</button>
+                    <div class="quick-toggle">
+                        <input type="checkbox" id="mainExcludeMachine" onchange="syncSettings('machine')">
+                        <label for="mainExcludeMachine">使用済みマシン不可</label>
+                    </div>
                 </div>
-                <button class="spin-btn" onclick="spinMachine()">RANDOM</button>
             </div>
         </div>
 
-        <button class="all-btn" onclick="spinAll()">ALL RANDOM START!</button>
+        <button id="spinAllBtn" class="all-btn" onclick="spinAll()">ALL RANDOM START!</button>
+    </div>
+
+    <div id="playerModal" class="modal">
+        <div class="modal-content">
+            <button class="close-icon-btn" onclick="closeModal('playerModal')">✖</button>
+            <h2 style="margin-top:20px;">プレイヤー設定</h2>
+            <div class="config-item">
+                <label>人数 (1〜6人)</label>
+                <select id="playerCountSelect" onchange="generatePlayerInputs()">
+                    <option value="1">1人</option><option value="2">2人</option>
+                    <option value="3">3人</option><option value="4">4人</option>
+                    <option value="5">5人</option><option value="6">6人</option>
+                </select>
+            </div>
+            <div class="config-item">
+                <label>キャラかぶりなし</label>
+                <input type="checkbox" id="preventCharOverlap">
+            </div>
+            <div class="config-item">
+                <label>マシンかぶりなし</label>
+                <input type="checkbox" id="preventMachOverlap">
+            </div>
+            <div id="playerNameInputs"></div>
+            <button class="close-btn" onclick="savePlayers()">保存して閉じる</button>
+        </div>
     </div>
 
     <div id="charModal" class="modal">
         <div class="modal-content">
-            <h2>持っているキャラを選択</h2>
+            <button class="close-icon-btn" onclick="closeModal('charModal')">✖</button>
+            <h2>キャラ選択</h2>
+            <div class="bulk-action-row">
+                <button class="bulk-btn select-all" onclick="bulkSelect('char', true)">すべて選択</button>
+                <button class="bulk-btn deselect-all" onclick="bulkSelect('char', false)">すべて解除</button>
+            </div>
             <div id="charList" class="selection-grid"></div>
-            <button class="close-btn" onclick="closeModal('charModal')">設定完了</button>
         </div>
     </div>
 
     <div id="machineModal" class="modal">
         <div class="modal-content">
-            <h2>持っているマシンを選択</h2>
+            <button class="close-icon-btn" onclick="closeModal('machineModal')">✖</button>
+            <h2>マシン選択</h2>
+            <div class="bulk-action-row">
+                <button class="bulk-btn select-all" onclick="bulkSelect('machine', true)">すべて選択</button>
+                <button class="bulk-btn deselect-all" onclick="bulkSelect('machine', false)">すべて解除</button>
+            </div>
             <div id="machineList" class="selection-grid"></div>
-            <button class="close-btn" onclick="closeModal('machineModal')">設定完了</button>
         </div>
     </div>
 
+    <div id="charHistoryModal" class="modal"><div class="modal-content"><button class="close-icon-btn" onclick="closeModal('charHistoryModal')">✖</button><h2>キャラ履歴</h2><div id="charHistoryGrid" class="selection-grid"></div><button class="reset-full-btn" onclick="resetHistory('char')">リセット</button></div></div>
+    <div id="machineHistoryModal" class="modal"><div class="modal-content"><button class="close-icon-btn" onclick="closeModal('machineHistoryModal')">✖</button><h2>マシン履歴</h2><div id="machineHistoryGrid" class="selection-grid"></div><button class="reset-full-btn" onclick="resetHistory('machine')">リセット</button></div></div>
+
     <div id="appSettingsModal" class="modal">
         <div class="modal-content">
-            <h2>アプリ動作設定</h2>
-            <div class="config-item">
-                <label>演出をカットする</label>
-                <input type="checkbox" id="skipAnimation">
-            </div>
-            <div class="config-item">
-                <label>ルーレット時間: <span id="timeValue">2.0</span>秒</label>
-                <input type="range" id="rouletteTime" min="0.5" max="5.0" step="0.5" value="2.0">
-            </div>
-            <button class="close-btn" onclick="closeModal('appSettingsModal')">保存して閉じる</button>
+            <button class="close-icon-btn" onclick="closeModal('appSettingsModal')">✖</button>
+            <h2>動作設定</h2>
+            <div class="config-item"><label>演出をスキップ</label><input type="checkbox" id="skipAnimation"></div>
+            <div class="config-item"><label>回転時間: <span id="timeValue">2.0</span>s</label><input type="range" id="rouletteTime" min="0.5" max="5.0" step="0.5" value="2.0"></div>
+            <button class="close-btn" onclick="closeModal('appSettingsModal')">保存</button>
         </div>
     </div>
 
